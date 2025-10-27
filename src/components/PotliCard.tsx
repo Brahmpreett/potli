@@ -38,7 +38,7 @@ const PotliCard = ({ name, color, percentage, balance, icon, onClick }: PotliCar
       className="relative overflow-hidden cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-lg p-6 texture-fabric"
       style={{
         background: `linear-gradient(135deg, ${bgColor}, ${bgColor}dd)`,
-        color: "white",
+        color: "#000000",
       }}
     >
       <div className="relative z-10">
@@ -58,13 +58,10 @@ const PotliCard = ({ name, color, percentage, balance, icon, onClick }: PotliCar
       </div>
 
       {/* Decorative tassel */}
-      <div
-        className="absolute bottom-0 right-4 w-1 h-6 opacity-60"
-        style={{ background: "white" }}
-      />
-      <div
-        className="absolute bottom-0 right-3 w-3 h-3 rounded-full opacity-60"
-        style={{ background: "white" }}
+      <img 
+        src="/favicon.png"
+        alt="Tassel"
+        className="absolute bottom-6 right-6 w-8 h-auto opacity-80"
       />
     </Card>
   );

@@ -170,7 +170,7 @@ const Dashboard = () => {
       <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
-            <h1 className="font-handwriting text-4xl text-primary">Potli</h1>
+            <h1 className="font-handwriting text-4xl font-bold text-primary">Potli</h1>
             
             <div className="flex items-center gap-2">
               <Button
