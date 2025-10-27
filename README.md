@@ -2,7 +2,7 @@
 
 ## Project info
 
-**URL**: https://potli.vercel.app
+**URL**: https://potli-budget.vercel.app
 
 ## How can I edit this code?
 
