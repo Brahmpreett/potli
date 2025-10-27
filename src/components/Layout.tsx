@@ -16,7 +16,11 @@ const Footer = () => {
   }, []);
 
   return (
-    <div className="fixed bottom-2 right-4 text-[10px] text-neutral-400 transition-opacity duration-500">
+    <div
+        className={`fixed bottom-2 right-4 text-[10px] text-neutral-400 transition-opacity duration-500 ${
+            showFooter ? "opacity-100" : "opacity-0"
+        }`}
+        >
         © 2025{" "}
         <a
             href="https://brahmpreet.vercel.app"
