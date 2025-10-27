@@ -16,12 +16,17 @@ const Footer = () => {
   }, []);
 
   return (
-    <div
-      className={`fixed bottom-2 right-4 text-[10px] text-neutral-400 transition-opacity duration-500 ${
-        showFooter ? "opacity-100" : "opacity-0"
-      }`}
-    >
-      © 2025 Brahmpreet Singh. All rights reserved.
+    <div className="fixed bottom-2 right-4 text-[10px] text-neutral-400 transition-opacity duration-500">
+        © 2025{" "}
+        <a
+            href="https://brahmpreet.vercel.app"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-neutral-700 underline hover:text-neutral-900"
+        >
+            Brahmpreet Singh
+        </a>
+        . All rights reserved.
     </div>
   );
 };
