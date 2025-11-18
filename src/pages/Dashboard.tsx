@@ -195,7 +195,7 @@ const Dashboard = () => {
       {/* Total Balance */}
       <div className="container mx-auto px-4 py-8">
         <div className="bg-gradient-to-br from-primary/20 to-accent/20 rounded-3xl p-8 mb-8 text-center">
-          <p className="text-sm text-muted-foreground mb-2">Total Balance</p>
+          <p className="text-sm text-muted-foreground mb-2">Liquid Money</p>
           <p className="font-handwriting text-6xl font-bold text-primary">
             ₹{totalBalance.toFixed(2)}
           </p>
