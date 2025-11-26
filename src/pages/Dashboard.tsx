@@ -24,6 +24,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
   const [incomeModalOpen, setIncomeModalOpen] = useState(false);
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
+  const [preSelectedPotliId, setPreSelectedPotliId] = useState<string>("");
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -147,9 +148,8 @@ const Dashboard = () => {
   };
 
   const handlePotliClick = (potliId: string) => {
-    // Pre-select the clicked potli and open expense modal
+    setPreSelectedPotliId(potliId);
     setExpenseModalOpen(true);
-    // We'll pass the selected potli ID to the modal
   };
 
   const totalBalance = potlis.reduce((sum, p) => sum + p.balance, 0);
@@ -257,6 +257,7 @@ const Dashboard = () => {
         onOpenChange={setExpenseModalOpen}
         potlis={potlis}
         onAddExpense={handleAddExpense}
+        preSelectedPotliId={preSelectedPotliId}
       />
 
       <SettingsSidebar
