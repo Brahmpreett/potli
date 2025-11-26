@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,14 +18,22 @@ interface AddExpenseModalProps {
   onOpenChange: (open: boolean) => void;
   potlis: Potli[];
   onAddExpense: (potliId: string, amount: number, description: string) => Promise<void>;
+  preSelectedPotliId?: string;
 }
 
-const AddExpenseModal = ({ open, onOpenChange, potlis, onAddExpense }: AddExpenseModalProps) => {
+const AddExpenseModal = ({ open, onOpenChange, potlis, onAddExpense, preSelectedPotliId }: AddExpenseModalProps) => {
   const [selectedPotliId, setSelectedPotliId] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
+
+  // Update selected potli when modal opens with a pre-selected potli
+  useEffect(() => {
+    if (open && preSelectedPotliId) {
+      setSelectedPotliId(preSelectedPotliId);
+    }
+  }, [open, preSelectedPotliId]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
