@@ -7,7 +7,7 @@ import PotliCard from "@/components/PotliCard";
 import AddIncomeModal from "@/components/AddIncomeModal";
 import AddExpenseModal from "@/components/AddExpenseModal";
 import SettingsSidebar from "@/components/SettingsSidebar";
-import { Plus, Minus, Settings, LogOut } from "lucide-react";
+import { Plus, Minus, Settings, User } from "lucide-react";
 
 interface Potli {
   id: string;
@@ -146,9 +146,10 @@ const Dashboard = () => {
     await fetchPotlis();
   };
 
-  const handleLogout = async () => {
-    await supabase.auth.signOut();
-    navigate("/auth");
+  const handlePotliClick = (potliId: string) => {
+    // Pre-select the clicked potli and open expense modal
+    setExpenseModalOpen(true);
+    // We'll pass the selected potli ID to the modal
   };
 
   const totalBalance = potlis.reduce((sum, p) => sum + p.balance, 0);
@@ -183,9 +184,9 @@ const Dashboard = () => {
               <Button
                 variant="outline"
                 size="icon"
-                onClick={handleLogout}
+                onClick={() => navigate("/account")}
               >
-                <LogOut className="h-5 w-5" />
+                <User className="h-5 w-5" />
               </Button>
             </div>
           </div>
@@ -230,7 +231,7 @@ const Dashboard = () => {
               percentage={potli.percentage}
               balance={potli.balance}
               icon={potli.icon}
-              onClick={() => {}}
+              onClick={() => handlePotliClick(potli.id)}
             />
           ))}
         </div>
