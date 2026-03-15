@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -95,47 +94,10 @@ export default function Account() {
       case "terms": return <TermsSection />;
       case "about": return <AboutSection />;
       default: return <AccountProfile />;
-=======
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import AccountSidebar from "@/components/account/AccountSidebar";
-import AccountDetails from "@/components/account/AccountDetails";
-import Preferences from "@/components/account/Preferences";
-import Personalisation from "@/components/account/Personalisation";
-import Notifications from "@/components/account/Notifications";
-import TermsConditions from "@/components/account/TermsConditions";
-import Help from "@/components/account/Help";
-
-type AccountSection = "account" | "preferences" | "personalisation" | "notifications" | "terms" | "help";
-
-const Account = () => {
-  const [activeSection, setActiveSection] = useState<AccountSection>("account");
-  const navigate = useNavigate();
-
-  const renderContent = () => {
-    switch (activeSection) {
-      case "account":
-        return <AccountDetails />;
-      case "preferences":
-        return <Preferences />;
-      case "personalisation":
-        return <Personalisation />;
-      case "notifications":
-        return <Notifications />;
-      case "terms":
-        return <TermsConditions />;
-      case "help":
-        return <Help />;
-      default:
-        return <AccountDetails />;
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
     }
   };
 
   return (
-<<<<<<< HEAD
     <div className="h-full relative min-h-screen bg-background texture-fabric transition-colors duration-500">
       <CoinBackground />
       
@@ -150,28 +112,10 @@ const Account = () => {
               <ChevronLeft className="w-6 h-6 text-foreground/80" />
             </button>
             <h1 className="font-handwriting text-4xl font-bold text-primary mb-1">Potli</h1>
-=======
-    <div className="min-h-screen bg-background texture-fabric">
-      {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={() => navigate("/dashboard")}
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </Button>
-              <h1 className="font-handwriting text-4xl font-bold text-primary">Account</h1>
-            </div>
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
           </div>
         </div>
       </header>
 
-<<<<<<< HEAD
       <div className="container mx-auto px-0 md:px-4 py-6 md:py-10 max-w-[1200px]">
         {/* Responsive Layout Shell */}
         <div className="flex flex-col md:flex-row gap-8 items-start">
@@ -210,27 +154,10 @@ const Account = () => {
           <main className="flex-1 w-full flex flex-col gap-6 px-4 md:px-0">
             {renderContent()}
           </main>
-
-=======
-      {/* Main Content */}
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col lg:flex-row gap-6">
-          {/* Sidebar */}
-          <AccountSidebar
-            activeSection={activeSection}
-            onSectionChange={setActiveSection}
-          />
-
-          {/* Content Area */}
-          <div className="flex-1">
-            {renderContent()}
-          </div>
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
         </div>
       </div>
     </div>
   );
-<<<<<<< HEAD
 }
 
 const PlaceholderCard = ({ title, description, icon }: { title: string, description: string, icon: React.ReactNode }) => (
@@ -240,8 +167,3 @@ const PlaceholderCard = ({ title, description, icon }: { title: string, descript
     <p className="text-muted-foreground max-w-sm font-medium">{description}</p>
   </div>
 );
-=======
-};
-
-export default Account;
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758

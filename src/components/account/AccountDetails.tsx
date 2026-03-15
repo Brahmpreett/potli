@@ -23,8 +23,8 @@ interface Transaction {
 }
 
 const AccountDetails = () => {
-  const [user, setUser] = useState<any>(null);
-  const [profile, setProfile] = useState<any>(null);
+  const [user, setUser] = useState<unknown>(null);
+  const [profile, setProfile] = useState<unknown>(null);
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [editNameOpen, setEditNameOpen] = useState(false);
   const [editUsernameOpen, setEditUsernameOpen] = useState(false);
@@ -91,10 +91,12 @@ const AccountDetails = () => {
   };
 
   const getInitials = () => {
-    if (profile?.full_name) {
-      return profile.full_name.split(" ").map((n: string) => n[0]).join("").toUpperCase();
+    const p = profile as { full_name?: string };
+    const u = user as { email?: string };
+    if (p?.full_name) {
+      return p.full_name.split(" ").map((n: string) => n[0]).join("").toUpperCase();
     }
-    return user?.email?.[0].toUpperCase() || "U";
+    return u?.email?.[0].toUpperCase() || "U";
   };
 
   const formatTransactionDate = (dateString: string) => {
@@ -113,7 +115,7 @@ const AccountDetails = () => {
       <Card className="p-6 texture-fabric">
         <div className="flex flex-col items-center space-y-4 mb-8">
           <Avatar className="h-24 w-24">
-            <AvatarImage src={profile?.avatar_url} />
+            <AvatarImage src={(profile as { avatar_url?: string })?.avatar_url} />
             <AvatarFallback className="text-2xl bg-primary text-primary-foreground">
               {getInitials()}
             </AvatarFallback>
@@ -129,7 +131,7 @@ const AccountDetails = () => {
           <div className="flex items-center justify-between py-4 border-b">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Name</p>
-              <p className="text-lg font-medium">{profile?.full_name || "Not set"}</p>
+              <p className="text-lg font-medium">{(profile as { full_name?: string })?.full_name || "Not set"}</p>
             </div>
             <Button
               variant="ghost"
@@ -145,7 +147,7 @@ const AccountDetails = () => {
           <div className="flex items-center justify-between py-4 border-b">
             <div>
               <p className="text-sm text-muted-foreground mb-1">Username</p>
-              <p className="text-lg font-medium">{profile?.username || "Not set"}</p>
+              <p className="text-lg font-medium">{(profile as { username?: string })?.username || "Not set"}</p>
             </div>
             <Button
               variant="ghost"
@@ -160,7 +162,7 @@ const AccountDetails = () => {
           {/* Email */}
           <div className="py-4 border-b">
             <p className="text-sm text-muted-foreground mb-1">Email</p>
-            <p className="text-lg font-medium">{user?.email}</p>
+            <p className="text-lg font-medium">{(user as { email?: string })?.email}</p>
           </div>
 
           {/* Subscription */}
@@ -231,14 +233,14 @@ const AccountDetails = () => {
       <EditNameModal
         open={editNameOpen}
         onOpenChange={setEditNameOpen}
-        currentName={profile?.full_name || ""}
+        currentName={(profile as { full_name?: string })?.full_name || ""}
         onUpdate={fetchUserData}
       />
 
       <EditUsernameModal
         open={editUsernameOpen}
         onOpenChange={setEditUsernameOpen}
-        currentUsername={profile?.username || ""}
+        currentUsername={(profile as { username?: string })?.username || ""}
         onUpdate={fetchUserData}
       />
     </div>

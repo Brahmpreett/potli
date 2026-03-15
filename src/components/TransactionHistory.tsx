@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { type RealtimeChannel } from "@supabase/supabase-js";
 import { format, parseISO, isToday, isYesterday } from "date-fns";
 import { Filter, AlertCircle, CheckCircle2 } from "lucide-react";
 
@@ -73,15 +74,16 @@ export default function TransactionHistory() {
         type: t.type as 'income' | 'expense',
         date: t.created_at || new Date().toISOString(),
         description: t.description,
-        category_name: t.type === 'income' ? 'General' : (t.potlis as any)?.name || 'Needs',
-        potlis: t.potlis as any
+        category_name: t.type === 'income' ? 'General' : ((t.potlis as unknown) as { name: string })?.name || 'Needs',
+        potlis: t.potlis as unknown as { name: string; color: string }
       }));
 
       setTransactions(mappedData);
       setHasMore(mappedData.length < (count || 0));
-    } catch (e: any) {
-      console.error(e);
-      setError(e.message || "Couldn't load transactions.");
+    } catch (e) {
+      const err = e as Error;
+      console.error(err);
+      setError(err.message || "Couldn't load transactions.");
     } finally {
       setIsLoading(false);
     }
@@ -91,7 +93,7 @@ export default function TransactionHistory() {
     fetchTransactions(20, true);
 
     // Real-time subscription
-    let channel: any;
+    let channel: RealtimeChannel | null = null;
     const setupSubscription = async () => {
         const { data: { user } } = await supabase.auth.getUser();
         if (!user) return;

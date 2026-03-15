@@ -17,7 +17,7 @@ interface PotliCardProps {
   isHovered?: boolean;
 }
 
-const iconMap: Record<string, any> = {
+const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Home: NeedsIcon,
   TrendingUp: InvestIcon,
   ShoppingBag: WantsIcon,

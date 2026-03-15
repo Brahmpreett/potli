@@ -44,10 +44,11 @@ const Auth = () => {
         });
         navigate("/dashboard");
       }
-    } catch (error: any) {
+    } catch (error) {
+      const err = error as Error;
       toast({
         title: "Error",
-        description: error.message,
+        description: err.message,
         variant: "destructive",
       });
     } finally {
@@ -190,10 +191,11 @@ const Auth = () => {
                   }
                 });
                 if (error) throw error;
-              } catch (error: any) {
+              } catch (error) {
+                const err = error as Error;
                 toast({
                   title: "Sign-in failed",
-                  description: error.message,
+                  description: err.message,
                   variant: "destructive",
                 });
               }

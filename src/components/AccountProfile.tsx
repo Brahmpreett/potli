@@ -8,7 +8,7 @@ export default function AccountProfile() {
   const [profile, setProfile] = useState<{
     id: string;
     email: string;
-    first_name: string;
+    full_name: string;
     avatar_url: string;
   } | null>(null);
   
@@ -43,14 +43,14 @@ export default function AccountProfile() {
       const finalProfile = {
         id: user.id,
         email: user.email || "",
-        first_name: data?.first_name || googleName || "",
+        full_name: data?.full_name || googleName || "",
         avatar_url: data?.avatar_url || googleAvatar || "",
         ...(data || {})
       };
 
       setProfile(finalProfile);
-      setTempName(finalProfile.first_name || "");
-    } catch (e: any) {
+      setTempName(finalProfile.full_name || "");
+    } catch (e) {
       console.error(e);
     }
   };
@@ -78,10 +78,11 @@ export default function AccountProfile() {
         description: "Your new profile picture has been saved.",
       });
 
-    } catch (error: any) {
+    } catch (error) {
+      const err = error as Error;
       toast({
         title: "Upload failed",
-        description: error.message,
+        description: err.message,
         variant: "destructive",
       });
     }
@@ -92,16 +93,17 @@ export default function AccountProfile() {
       if (!profile?.id) return;
       const { error } = await supabase
         .from('profiles')
-        .update({ first_name: tempName })
+        .update({ full_name: tempName })
         .eq('id', profile.id);
 
       if (error) throw error;
       
-      setProfile(prev => prev ? { ...prev, first_name: tempName } : null);
+      setProfile(prev => prev ? { ...prev, full_name: tempName } : null);
       setIsEditingName(false);
       toast({ title: "Name updated" });
-    } catch (error: any) {
-      toast({ title: "Update failed", description: error.message, variant: "destructive" });
+    } catch (error) {
+      const err = error as Error;
+      toast({ title: "Update failed", description: err.message, variant: "destructive" });
     }
   };
 
@@ -114,7 +116,7 @@ export default function AccountProfile() {
   if (!profile) return <div className="animate-pulse w-full h-[400px] bg-card/50 rounded-2xl" />;
 
   const getInitials = () => {
-    if (profile.first_name) return profile.first_name.charAt(0).toUpperCase();
+    if (profile.full_name) return profile.full_name.charAt(0).toUpperCase();
     if (profile.email) return profile.email.charAt(0).toUpperCase();
     return <User className="w-8 h-8" />;
   };
@@ -149,7 +151,7 @@ export default function AccountProfile() {
         </div>
         
         <div className="flex flex-col items-center md:items-start pt-2">
-          <h2 className="text-2xl font-bold">{profile.first_name || "Welcome to Potli"}</h2>
+          <h2 className="text-2xl font-bold">{profile.full_name || "Welcome to Potli"}</h2>
           <p className="text-muted-foreground">{profile.email}</p>
           <button 
             onClick={() => fileInputRef.current?.click()}
@@ -169,7 +171,7 @@ export default function AccountProfile() {
             <div className="flex flex-col">
               <span className="text-[11px] font-bold uppercase tracking-wider text-muted-foreground mb-1">Name</span>
               {!isEditingName && (
-                <span className="text-lg font-medium">{profile.first_name || "Add a name"}</span>
+                <span className="text-lg font-medium">{profile.full_name || "Add a name"}</span>
               )}
             </div>
             {!isEditingName && (
@@ -194,7 +196,7 @@ export default function AccountProfile() {
               <button onClick={handleNameSave} className="bg-[#F5A623] hover:bg-[#e09618] text-white p-2 rounded-xl transition-colors shadow-sm">
                 <Check className="w-5 h-5" />
               </button>
-              <button onClick={() => { setIsEditingName(false); setTempName(profile.first_name || ""); }} className="border border-input hover:bg-muted p-2 rounded-xl transition-colors">
+              <button onClick={() => { setIsEditingName(false); setTempName(profile.full_name || ""); }} className="border border-input hover:bg-muted p-2 rounded-xl transition-colors">
                 <X className="w-5 h-5" />
               </button>
             </div>

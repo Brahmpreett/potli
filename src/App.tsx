@@ -14,7 +14,6 @@ import Layout from "./components/Layout";
 
 const queryClient = new QueryClient();
 
-<<<<<<< HEAD
 const App = () => {
   useEffect(() => {
     const savedTheme = localStorage.getItem("potli-theme");
@@ -59,40 +58,5 @@ const App = () => {
     </QueryClientProvider>
   );
 };
-=======
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/auth" element={<Auth />} />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/account"
-              element={
-                <ProtectedRoute>
-                  <Account />
-                </ProtectedRoute>
-              }
-            />
-            <Route path="*" element={<NotFound />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
 
 export default App;

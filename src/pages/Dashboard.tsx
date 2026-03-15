@@ -7,15 +7,9 @@ import PotliCard from "@/components/PotliCard";
 import AddIncomeModal from "@/components/AddIncomeModal";
 import AddExpenseModal from "@/components/AddExpenseModal";
 import SettingsSidebar from "@/components/SettingsSidebar";
-<<<<<<< HEAD
 import { DonutChart } from "@/components/DonutChart";
 import { CoinBackground } from "@/components/CoinBackground";
 import { Plus, Minus, Settings, User } from "lucide-react";
-import SwipeableViews from "react-swipeable-views";
-// import RecentTransactions from "@/components/RecentTransactions";
-=======
-import { Plus, Minus, Settings, User } from "lucide-react";
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
 
 interface Potli {
   id: string;
@@ -28,17 +22,12 @@ interface Potli {
 }
 
 const Dashboard = () => {
-  const [index, setIndex] = useState(0);
   const [potlis, setPotlis] = useState<Potli[]>([]);
   const [loading, setLoading] = useState(true);
   const [hoveredPotliId, setHoveredPotliId] = useState<string | null>(null);
   const [incomeModalOpen, setIncomeModalOpen] = useState(false);
   const [expenseModalOpen, setExpenseModalOpen] = useState(false);
-<<<<<<< HEAD
   const [preSelectedPotliId, setPreSelectedPotliId] = useState<string | null>(null);
-=======
-  const [preSelectedPotliId, setPreSelectedPotliId] = useState<string>("");
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
   const [settingsOpen, setSettingsOpen] = useState(false);
   const navigate = useNavigate();
   const { toast } = useToast();
@@ -60,10 +49,10 @@ const Dashboard = () => {
 
       if (error) throw error;
       setPotlis(data || []);
-    } catch (error: any) {
+    } catch (error: unknown) {
       toast({
         title: "Error",
-        description: "Failed to load potlis",
+        description: `Failed to load potlis: ${(error as Error).message}`,
         variant: "destructive",
       });
     } finally {
@@ -161,11 +150,6 @@ const Dashboard = () => {
     await fetchPotlis();
   };
 
-  const handlePotliClick = (potliId: string) => {
-    setPreSelectedPotliId(potliId);
-    setExpenseModalOpen(true);
-  };
-
   const handleCardClick = (potliId: string) => {
     setPreSelectedPotliId(potliId);
     setExpenseModalOpen(true);
@@ -185,8 +169,7 @@ const Dashboard = () => {
   }
 
   return (
-<<<<<<< HEAD
-  <div className="h-full relative">
+    <div className="h-full relative">
       <CoinBackground />
       {/* View 1: Dashboard */}       
       <div className="min-h-screen bg-transparent texture-fabric">
@@ -215,30 +198,6 @@ const Dashboard = () => {
                   </div>
                 </Button>
               </div>
-=======
-    <div className="min-h-screen bg-background texture-fabric">
-      {/* Header */}
-      <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <h1 className="font-handwriting text-4xl font-bold text-primary">Potli</h1>
-            
-            <div className="flex items-center gap-2">
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => setSettingsOpen(true)}
-              >
-                <Settings className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="outline"
-                size="icon"
-                onClick={() => navigate("/account")}
-              >
-                <User className="h-5 w-5" />
-              </Button>
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
             </div>
           </div>
         </header>
@@ -297,7 +256,6 @@ const Dashboard = () => {
                 ))}
               </div>
 
-<<<<<<< HEAD
               {potlis.length === 0 && (
                 <div className="text-center py-12 relative z-10">
                   <p className="text-muted-foreground mb-4">
@@ -347,23 +305,6 @@ const Dashboard = () => {
                 })}
               </div>
             </div>
-=======
-        {/* Potlis Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {potlis.map((potli) => (
-            <PotliCard
-              key={potli.id}
-              name={potli.name}
-              color={potli.color}
-              percentage={potli.percentage}
-              balance={potli.balance}
-              icon={potli.icon}
-              onClick={() => handlePotliClick(potli.id)}
-            />
-          ))}
-        </div>
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
-
           </div>
         </div>
 
@@ -395,36 +336,7 @@ const Dashboard = () => {
           onRenamePotli={handleRenamePotli}
         />
       </div>
-<<<<<<< HEAD
-  </div>
-=======
-
-      {/* Modals */}
-      <AddIncomeModal
-        open={incomeModalOpen}
-        onOpenChange={setIncomeModalOpen}
-        onAddIncome={handleAddIncome}
-      />
-
-      <AddExpenseModal
-        open={expenseModalOpen}
-        onOpenChange={setExpenseModalOpen}
-        potlis={potlis}
-        onAddExpense={handleAddExpense}
-        preSelectedPotliId={preSelectedPotliId}
-      />
-
-      <SettingsSidebar
-        open={settingsOpen}
-        onOpenChange={setSettingsOpen}
-        potlis={potlis}
-        onUpdatePercentages={handleUpdatePercentages}
-        onAddPotli={handleAddPotli}
-        onDeletePotli={handleDeletePotli}
-        onRenamePotli={handleRenamePotli}
-      />
     </div>
->>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
   );
 };
 
