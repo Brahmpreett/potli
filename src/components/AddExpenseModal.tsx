@@ -18,21 +18,37 @@ interface AddExpenseModalProps {
   onOpenChange: (open: boolean) => void;
   potlis: Potli[];
   onAddExpense: (potliId: string, amount: number, description: string) => Promise<void>;
+<<<<<<< HEAD
   defaultPotliId?: string;
 }
 
   const AddExpenseModal = ({ open, onOpenChange, potlis, onAddExpense, defaultPotliId }: AddExpenseModalProps) => {
+=======
+  preSelectedPotliId?: string;
+}
+
+const AddExpenseModal = ({ open, onOpenChange, potlis, onAddExpense, preSelectedPotliId }: AddExpenseModalProps) => {
+>>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
   const [selectedPotliId, setSelectedPotliId] = useState("");
   const [amount, setAmount] = useState("");
   const [description, setDescription] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
+<<<<<<< HEAD
   useEffect(() => {
     if (open && defaultPotliId) {
       setSelectedPotliId(defaultPotliId);
     }
   }, [open, defaultPotliId]);
+=======
+  // Update selected potli when modal opens with a pre-selected potli
+  useEffect(() => {
+    if (open && preSelectedPotliId) {
+      setSelectedPotliId(preSelectedPotliId);
+    }
+  }, [open, preSelectedPotliId]);
+>>>>>>> e9399c55e82f89989ea956b672d0e72b74cf2758
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
