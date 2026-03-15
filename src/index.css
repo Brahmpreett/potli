@@ -11,108 +11,81 @@ All colors MUST be HSL.
     /* Warm base colors */
     --background: 40 30% 94%;
     --foreground: 30 20% 20%;
-
     --card: 40 40% 98%;
     --card-foreground: 30 20% 20%;
-
     --popover: 40 40% 98%;
     --popover-foreground: 30 20% 20%;
-
-    /* Gold primary */
     --primary: 45 100% 45%;
     --primary-foreground: 30 20% 20%;
-
-    /* Soft secondary */
     --secondary: 40 25% 88%;
     --secondary-foreground: 30 20% 20%;
-
     --muted: 40 25% 88%;
     --muted-foreground: 30 15% 45%;
-
     --accent: 45 85% 60%;
     --accent-foreground: 30 20% 20%;
-
-    --destructive: 0 70% 50%;
+    --destructive: 8 63% 56%;
     --destructive-foreground: 0 0% 98%;
-
     --border: 40 20% 85%;
     --input: 40 20% 85%;
     --ring: 45 100% 45%;
-
     --radius: 1rem;
     
-    /* Potli colors */
-    --royal-blue: 220 70% 50%;
-    --emerald: 150 60% 45%;
-    --turmeric: 45 85% 55%;
-    --maroon: 0 70% 35%;
-    --coral: 15 85% 65%;
-    --saffron: 30 90% 60%;
+    /* Potli colors - Earthy Warm Palette */
+    --turmeric: 40 76% 56%;
+    --emerald: 105 21% 46%;
+    --royal-blue: 27 60% 51%;
+    --maroon: 8 63% 56%;
+    --coral: 342 32% 65%;
+    --saffron: 260 21% 57%;
     
     /* Gradients */
     --gradient-warm: linear-gradient(135deg, hsl(40 40% 96%), hsl(45 50% 92%));
     --gradient-gold: linear-gradient(135deg, hsl(45 100% 50%), hsl(35 95% 55%));
     
-    /* Shadows */
+    /* Shadows & Effects */
     --shadow-soft: 0 4px 20px hsla(40, 30%, 50%, 0.15);
     --shadow-potli: 0 8px 30px hsla(0, 0%, 0%, 0.2);
+    --watermark-opacity: 0.03;
+    --donut-side-darken: 0.65;
     
     /* Animation */
     --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-
     --sidebar-background: 0 0% 98%;
-
     --sidebar-foreground: 240 5.3% 26.1%;
-
     --sidebar-primary: 240 5.9% 10%;
-
     --sidebar-primary-foreground: 0 0% 98%;
-
     --sidebar-accent: 240 4.8% 95.9%;
-
     --sidebar-accent-foreground: 240 5.9% 10%;
-
     --sidebar-border: 220 13% 91%;
-
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
 
-  .dark {
-    --background: 30 20% 12%;
+  .dark-mode {
+    --background: 30 20% 7%;
     --foreground: 40 30% 95%;
-
-    --card: 30 20% 15%;
+    --card: 27 43% 10%;
     --card-foreground: 40 30% 95%;
-
-    --popover: 30 20% 15%;
+    --card-border: 30 40% 17%;
+    --popover: 27 43% 10%;
     --popover-foreground: 40 30% 95%;
-
-    --primary: 45 100% 50%;
+    --primary: 45 100% 45%;
     --primary-foreground: 30 20% 12%;
-
     --secondary: 30 15% 25%;
-    --secondary-foreground: 40 30% 95%;
-
+    --secondary-foreground: 30 15% 60%;
     --muted: 30 15% 25%;
-    --muted-foreground: 40 20% 65%;
-
+    --muted-foreground: 30 15% 60%;
     --accent: 45 85% 55%;
     --accent-foreground: 30 20% 12%;
-
-    --destructive: 0 70% 45%;
+    --destructive: 8 65% 63%;
     --destructive-foreground: 40 30% 95%;
-
-    --border: 30 15% 25%;
-    --input: 30 15% 25%;
-    --ring: 45 100% 50%;
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --income: 105 30% 56%;
+    --border: 30 40% 17%;
+    --input: 30 40% 17%;
+    --ring: 45 100% 45%;
+    --shadow-soft: 0 4px 25px rgba(0,0,0,0.4);
+    --shadow-potli: 0 12px 40px rgba(0,0,0,0.5);
+    --watermark-opacity: 0.07;
+    --donut-side-darken: 0.50;
   }
 }
 
@@ -123,6 +96,7 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground font-sans;
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
   
   .font-handwriting {
@@ -145,6 +119,50 @@ All colors MUST be HSL.
   
   .animate-glow {
     animation: glow 1.5s ease-in-out infinite;
+  }
+
+  /* 3D Donut Chart Animations */
+  .animate-donut-float {
+    animation: donutFloat 3s ease-in-out infinite;
+  }
+  
+  .animate-donut-shadow {
+    animation: donutShadow 3s ease-in-out infinite;
+  }
+  
+  .animate-donut-intro {
+    animation: donutIntro 600ms ease-out forwards;
+  }
+  
+  @keyframes donutFloat {
+    0%, 100% {
+      transform: translateY(0px) rotateX(60deg) rotateZ(-20deg);
+    }
+    50% {
+      transform: translateY(-8px) rotateX(60deg) rotateZ(-20deg);
+    }
+  }
+  
+  @keyframes donutShadow {
+    0%, 100% {
+      transform: scale(1);
+      opacity: 0.15;
+    }
+    50% {
+      transform: scale(0.9);
+      opacity: 0.10;
+    }
+  }
+  
+  @keyframes donutIntro {
+    0% {
+      transform: translateY(60px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
   }
   
   @keyframes coinDrop {
@@ -180,6 +198,29 @@ All colors MUST be HSL.
     50% {
       box-shadow: 0 0 40px hsla(45, 100%, 50%, 0.6);
     }
+  }
+
+  @keyframes coinDrift {
+    0%, 100% {
+      margin-top: 0;
+      margin-left: 0;
+    }
+    25% {
+      margin-top: -15px;
+      margin-left: 10px;
+    }
+    50% {
+      margin-top: -5px;
+      margin-left: 20px;
+    }
+    75% {
+      margin-top: 10px;
+      margin-left: 5px;
+    }
+  }
+  
+  .animate-coin-drift {
+    animation: coinDrift ease-in-out infinite;
   }
   
   .texture-fabric {
