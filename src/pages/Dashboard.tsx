@@ -10,7 +10,7 @@ import SettingsSidebar from "@/components/SettingsSidebar";
 import { DonutChart } from "@/components/DonutChart";
 import { CoinBackground } from "@/components/CoinBackground";
 import { Plus, Minus, Settings, User } from "lucide-react";
-
+console.log("ENV:", import.meta.env);
 interface Potli {
   id: string;
   name: string;
@@ -33,28 +33,33 @@ const Dashboard = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    fetchPotlis();
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((event, session) => {
+      if (session?.user) {
+        fetchPotlis();
+      }
+    });
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const fetchPotlis = async () => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
+      const { data: { session } } = await supabase.auth.getSession();
+      if (!session?.user) return;
 
       const { data, error } = await supabase
         .from("potlis")
         .select("*")
-        .eq("user_id", user.id)
+        .eq("user_id", session.user.id)
         .order("display_order");
 
       if (error) throw error;
+
       setPotlis(data || []);
-    } catch (error: unknown) {
-      toast({
-        title: "Error",
-        description: `Failed to load potlis: ${(error as Error).message}`,
-        variant: "destructive",
-      });
+    } catch (error) {
+      console.log(error);
     } finally {
       setLoading(false);
     }
@@ -171,14 +176,14 @@ const Dashboard = () => {
   return (
     <div className="h-full relative">
       <CoinBackground />
-      {/* View 1: Dashboard */}       
+      {/* View 1: Dashboard */}
       <div className="min-h-screen bg-transparent texture-fabric">
         {/* Header */}
         <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
           <div className="container mx-auto px-4 py-4">
             <div className="flex items-center justify-between">
               <h1 className="font-handwriting text-4xl font-bold text-primary">Potli</h1>
-              
+
               <div className="flex items-center gap-2">
                 <Button
                   variant="outline"
@@ -205,10 +210,10 @@ const Dashboard = () => {
         {/* Dashboard Content */}
         <div className="container mx-auto px-4 py-8 lg:pt-8 max-w-[1200px]">
           <div className="grid grid-cols-1 lg:grid-cols-[60%_calc(40%-40px)] gap-10 items-start">
-            
+
             {/* LEFT COLUMN */}
             <div className="flex flex-col gap-8 order-2 lg:order-1">
-              
+
               <div className="flex flex-col gap-4 w-full">
                 <div>
                   <p className="text-sm text-muted-foreground mb-1 font-bold uppercase tracking-widest">Liquid Money</p>
@@ -216,7 +221,7 @@ const Dashboard = () => {
                     ₹{totalBalance.toLocaleString('en-IN', { maximumFractionDigits: 0 })}
                   </p>
                 </div>
-                
+
                 <div className="flex gap-4 max-w-md w-full relative z-10 mt-2">
                   <Button
                     onClick={() => setIncomeModalOpen(true)}
@@ -238,7 +243,7 @@ const Dashboard = () => {
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
                 {potlis.map((potli) => (
-                  <div 
+                  <div
                     key={potli.id}
                     onMouseEnter={() => setHoveredPotliId(potli.id)}
                     onMouseLeave={() => setHoveredPotliId(null)}
@@ -268,9 +273,9 @@ const Dashboard = () => {
             {/* RIGHT COLUMN */}
             <div className="lg:sticky lg:top-32 order-1 lg:order-2 flex flex-col items-center w-full min-w-[340px] max-w-[420px] mx-auto overflow-visible px-4">
               <div className="w-full">
-                <DonutChart 
-                  potlis={potlis} 
-                  totalBalance={totalBalance} 
+                <DonutChart
+                  potlis={potlis}
+                  totalBalance={totalBalance}
                   hoveredPotliId={hoveredPotliId}
                   onHover={setHoveredPotliId}
                 />
@@ -288,15 +293,15 @@ const Dashboard = () => {
                     "saffron": "var(--saffron)",
                   };
                   return (
-                    <div 
-                      key={`legend-${potli.id}`} 
+                    <div
+                      key={`legend-${potli.id}`}
                       className={`flex items-center gap-2.5 text-sm transition-all duration-200 cursor-pointer p-2 rounded-xl border border-transparent hover:border-border/40 hover:bg-card/50 ${hoveredPotliId && hoveredPotliId !== potli.id ? 'opacity-40 grayscale-[20%]' : 'opacity-100'}`}
                       onMouseEnter={() => setHoveredPotliId(potli.id)}
                       onMouseLeave={() => setHoveredPotliId(null)}
                     >
-                      <div 
-                        className="w-3.5 h-3.5 rounded-full shadow-sm" 
-                        style={{ backgroundColor: colorMap[potli.color] || 'var(--turmeric)' }} 
+                      <div
+                        className="w-3.5 h-3.5 rounded-full shadow-sm"
+                        style={{ backgroundColor: colorMap[potli.color] || 'var(--turmeric)' }}
                       />
                       <span className="font-bold text-foreground/80">{potli.name}</span>
                       <span className="text-muted-foreground font-bold text-[11px] bg-muted/30 px-1.5 py-0.5 rounded-md">{potli.percentage}%</span>
