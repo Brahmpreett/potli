@@ -69,7 +69,16 @@ const Auth = () => {
       }
     };
     checkError();
-  }, [toast]);
+
+    // Redirect to dashboard if already signed in (handles OAuth return)
+    const { data: sub } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session) navigate("/dashboard", { replace: true });
+    });
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) navigate("/dashboard", { replace: true });
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [toast, navigate]);
 
   return (
     <div
