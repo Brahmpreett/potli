@@ -11,7 +11,7 @@ export const useMousePosition = () => {
   
   const requestRef = useRef<number>();
   const isScrolling = useRef(false);
-  const scrollTimeout = useRef<NodeJS.Timeout>();
+  const scrollTimeout = useRef<ReturnType<typeof setTimeout>>();
   // To handle every 2nd frame for coins if needed, though lerping all frames is smoother. We'll lerp all frames for `x` `y`, but components can throttle.
 
   const updatePosition = () => {
