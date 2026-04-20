@@ -143,17 +143,23 @@ const Auth = () => {
               variant="outline"
               className="w-full"
               onClick={async () => {
-                const { error } = await lovable.auth.signInWithOAuth("google", {
-                  redirect_uri: window.location.origin,
+                setLoading(true);
+                const result = await lovable.auth.signInWithOAuth("google", {
+                  redirect_uri: `${window.location.origin}/dashboard`,
                 });
-                if (error) {
+                if (result.error) {
                   toast({
-                    title: "Error",
-                    description: error.message,
+                    title: "Sign-in failed",
+                    description: result.error.message,
                     variant: "destructive",
                   });
+                  setLoading(false);
+                  return;
                 }
+                if (result.redirected) return;
+                navigate("/dashboard");
               }}
+              disabled={loading}
             >
               <svg className="mr-2 h-4 w-4" viewBox="0 0 24 24">
                 <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92a5.06 5.06 0 0 1-2.2 3.32v2.77h3.57c2.08-1.92 3.27-4.74 3.27-8.1z" fill="#4285F4"/>
