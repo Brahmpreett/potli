@@ -49,25 +49,33 @@ const Dashboard = () => {
 }, []);
 
   const fetchPotlis = async () => {
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (!session?.user) return;
+  try {
+    const { data: { session } } = await supabase.auth.getSession();
+    console.log("Session:", session);
+    console.log("User ID:", session?.user?.id);
 
-      const { data, error } = await supabase
-        .from("potlis")
-        .select("*")
-        .eq("user_id", session.user.id)
-        .order("display_order");
-
-      if (error) throw error;
-
-      setPotlis(data || []);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(false);
+    if (!session?.user) {
+      console.log("NO SESSION — returning early");
+      return;
     }
-  };
+
+    const { data, error } = await supabase
+      .from("potlis")
+      .select("*")
+      .eq("user_id", session.user.id)
+      .order("display_order");
+
+    console.log("Potlis data:", data);
+    console.log("Potlis error:", error);
+
+    if (error) throw error;
+    setPotlis(data || []);
+  } catch (error) {
+    console.log("CATCH error:", error);
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleAddIncome = async (amount: number, description: string) => {
     const { data: { user } } = await supabase.auth.getUser();
