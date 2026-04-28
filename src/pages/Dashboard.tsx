@@ -33,16 +33,20 @@ const Dashboard = () => {
   const { toast } = useToast();
 
   useEffect(() => {
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, session) => {
-      if (session?.user) {
-        fetchPotlis();
-      }
-    });
+  // Fetch immediately on mount for already-logged-in users
+  fetchPotlis();
 
-    return () => subscription.unsubscribe();
-  }, []);
+  // Also fetch on auth state change (e.g. after OAuth login)
+  const {
+    data: { subscription },
+  } = supabase.auth.onAuthStateChange((event, session) => {
+    if (session?.user) {
+      fetchPotlis();
+    }
+  });
+
+  return () => subscription.unsubscribe();
+}, []);
 
   const fetchPotlis = async () => {
     try {
