@@ -97,7 +97,7 @@ const Auth = () => {
               Potli
             </h1>
             <p className="text-muted-foreground text-sm">
-              Make Your Money Meaningful
+              Spend guilt-free
             </p>
           </div>
 

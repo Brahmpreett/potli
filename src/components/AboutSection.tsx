@@ -10,7 +10,7 @@ export default function AboutSection() {
             <span className="font-handwriting text-6xl text-primary font-bold">P</span>
         </div>
         <h1 className="font-handwriting text-6xl md:text-7xl font-bold text-primary">Potli</h1>
-        <p className="text-xl md:text-2xl font-medium text-muted-foreground italic">"Make Your Money Meaningful"</p>
+        <p className="text-xl md:text-2xl font-medium text-muted-foreground italic">"Spend guilt-free"</p>
         <span className="px-4 py-1.5 bg-primary/10 text-primary rounded-full text-xs font-bold tracking-widest uppercase border border-primary/20">Beta v1.0</span>
       </section>
 
